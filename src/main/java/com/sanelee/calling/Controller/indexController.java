@@ -168,4 +168,26 @@ public class indexController {
         orderNumber = 0;
         return "redirect:/reset";
     }
+
+    @GetMapping("/DevReset")
+    public String DevReset(Model model){
+        List<User> userList = new ArrayList();
+        for (Map.Entry<String,User> entry: userMap.entrySet()){
+            userList.add(entry.getValue());
+        }
+        model.addAttribute("userInfo",userList);
+        model.addAttribute("usersInfo",userslist);
+        return "DevReset";
+    }
+    @RequestMapping("/resetUser")
+    public String resetUser(){
+
+        while (userMap.size() != 0){
+            Map.Entry<String, User> next = userMap.entrySet().iterator().next();
+            userMap.remove(next.getKey());
+        }
+        userslist.clear();
+        orderNumber = 0;
+        return "redirect:/DevReset";
+    }
 }
