@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+    <title>查询取号信息</title>
+    <meta name="viewport" http-equiv="Content-Type"
+          content="text/html; charset=UTF-8;width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="/css/common.css">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body style="background-color: #f5f4f8" background="images/bg.jpg">
+<div class="login_cont">
+    <div style="height: 100px; margin-top: 20px">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+            <div class="jumbotron" style="background: none">
+                <h1 style="text-align: center;color: ghostwhite">您的挂号信息</h1>
+            </div>
+        </div>
+    </div>
+    <form class="form-inline" action="/search" method="post">
+        <div class="input_signup active" >
+            <input type="text" id="name" aria-label="姓名" placeholder="请输入姓名..." name="userName" maxlength="16"
+                   style="font-size: 20px" class="input" required autofocus>
+            <div class="hint" >请填写符合格式的姓名</div>
+            <input type="text" id="phone" placeholder="请输入手机号" name="userPhone" maxlength="11"  class="input" style="font-size: 20px"
+                   required autofocus>
+            <div class="hint">请填写符合格式的手机号</div>
+            <input type="submit" id="submit" class="button" name="button" value="查询号码">
+        </div>
+
+    </form>
+</div>
+<script type="text/javascript" src="/js/login.js"></script>
+<script type="text/javascript" src="/js/form.js"></script>
+<script type="text/javascript" src="/js/config.js"></script>
+<script type="text/javascript" src="/js/login_ajax.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+    <title>填写取号信息</title>
+    <meta name="viewport" http-equiv="Content-Type"
+          content="text/html; charset=UTF-8;width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/zhiyuan.css">
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body style="background-color: #f5f4f8" background="images/bg.jpg">
+<div class="panel panel-primary" style="margin-top: 50px;margin-left: 15px; margin-right: 15px;">
+    <div class="panel-heading">
+        <h3>当前病人</h3>
+    </div>
+    <div class="panel-body">
+        <p>姓名：</p>
+        <h3 th:text="${userInfo.getName()}"></h3>
+        <p>号码：</p>
+        <h3 th:text="${userInfo.getOrderNumber()}"></h3>
+        <p>性别</p>
+        <h3 th:text="${userInfo.getGender()}"></h3>
+        <p>年龄</p>
+        <h3 th:text="${userInfo.getAge()}"></h3>
+    </div>
+</div>
+<div style="text-align: center">
+    <a href="/nurseIndex">
+        <input value="返回" class="btn btn-primary btn-block" style="width: 130px;display: inline;font-size: 20px">
+    </a>
+    <a href="/nextUser">
+        <input value="下一个" class="btn btn-primary btn-block" style="width: 130px;display: inline;font-size: 20px">
+    </a>
+    <h4 th:text="${msg}" style="color: red"></h4>
+</div>
+</body>
+</html>

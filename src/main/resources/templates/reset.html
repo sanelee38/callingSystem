@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+    <title>当天所有病人信息</title>
+    <meta name="viewport" http-equiv="Content-Type"
+          content="text/html; charset=UTF-8;width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/zhiyuan.css">
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body style="background-color: #f5f4f8" background="images/bg.jpg">
+<div style="margin-top: 50px;margin-left: 15px; margin-right: 15px; text-align: center " >
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3>已叫号病人名单</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>号码</th>
+                    <td>姓名</td>
+                    <td>年龄</td>
+                    <td>性别</td>
+                </tr>
+                </thead>
+                <tbody th:each="users:${usersInfo}">
+                <tr>
+                    <th style="font-size:14pt" th:text="${users.getOrderNumber()}"></th>
+                    <td style="font-size:14pt" th:text="${users.getName()}"></td>
+                    <td style="font-size:14pt" th:text="${users.getAge()}"></td>
+                    <td style="font-size:14pt" th:text="${users.getGender()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="text-align: center">
+        <a href="resetNumber">
+            <input value="重置排号" class="btn btn-primary btn-block" style="width: 130px;display: inline;font-size: 20px">
+        </a>
+    </div>
+</div>
+</body>
+</html>

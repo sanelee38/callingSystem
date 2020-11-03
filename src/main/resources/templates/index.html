@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
+<head>
+    <title>填写取号信息</title>
+    <meta name="viewport" http-equiv="Content-Type"
+          content="text/html; charset=UTF-8;width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/zhiyuan.css">
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body style="background-color: #f5f4f8" background="images/bg.jpg">
+<div style="height: 100px; margin-top: 80px">
+
+    <div >
+        <img src="images/xinyue.jpg" alt=" " width="80%" align="center;"style="margin-left: 42px"/>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " style="margin-top: 25px ">
+        <div class="jumbotron" style="background: none;padding-top: 0px">
+            <h1 style="text-align: center;color: ghostwhite;" >行医一时   鞠躬一生</h1>
+            <h1 style="text-align: center;color: ghostwhite; ">不求闻达   但求利人</h1>
+        </div>
+
+
+        <div style="text-align: center">
+            <a href="/register">
+                <input value="挂号" class="btn btn-primary btn-block" style="width: 130px;display: inline;font-size: 20px">
+            </a>
+            <a href="/searchNumber">
+                <input value="查询号码" class="btn btn-primary btn-block" style="width: 130px;display: inline;font-size: 20px">
+            </a>
+            <h4 th:text="${msg}" style="color: red"></h4>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
