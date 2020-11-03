@@ -103,10 +103,14 @@ public class indexController {
     @RequestMapping(value = "/search",method = RequestMethod.POST)
     public String search(Model model,
                          Map<String,Object> map,
-                         @RequestParam(name = "userPhone",required = true) String userPhone){
+                         @RequestParam(name = "userPhone",required = true) String userPhone,
+                         @RequestParam(name = "userName",required = true) String userName){
         User user = userMap.get(userPhone);
         if (null == user){
             map.put("msg","您还没有挂号");
+            return "index";
+        }else if(user.getName() != userName){
+            map.put("msg","姓名与手机号不匹配");
             return "index";
         }else {
             model.addAttribute("userInfo",user);
