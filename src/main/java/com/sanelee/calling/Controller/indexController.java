@@ -109,7 +109,7 @@ public class indexController {
         if (null == user){
             map.put("msg","您还没有挂号");
             return "index";
-        }else if(user.getName() != userName){
+        }else if(!user.getName().equals(userName)){
             map.put("msg","姓名与手机号不匹配");
             return "index";
         }else {
