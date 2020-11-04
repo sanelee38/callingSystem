@@ -12,5 +12,6 @@ public class User {
     private String phoneNumber;
     private int orderNumber;
     private String DateTime;
+    private int score;
     private boolean flag;
 }

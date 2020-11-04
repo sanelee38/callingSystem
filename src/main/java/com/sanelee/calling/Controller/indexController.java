@@ -57,14 +57,52 @@ public class indexController {
     @RequestMapping(value = "/getNumber",method = RequestMethod.POST)
     public synchronized String getNumber(Model model,
                                          Map<String,Object> map,
-                                         @RequestParam(name = "username",required = true) String username,
-                                         @RequestParam(name = "userAge",required = true) Integer userAge,
-                                         @RequestParam(name = "userGender",required = true) String userGender,
-                                         @RequestParam(name = "userPhone",required = true) String userPhone){
+                                         @RequestParam(name = "username") String username,
+                                         @RequestParam(name = "userAge") Integer userAge,
+                                         @RequestParam(name = "userGender") String userGender,
+                                         @RequestParam(name = "userPhone") String userPhone,
+                                         @RequestParam(name = "r",required = false) String r,
+                                         @RequestParam(name = "r1",required = false) String r1,
+                                         @RequestParam(name = "r2",required = false) String r2,
+                                         @RequestParam(name = "r3",required = false) String r3,
+                                         @RequestParam(name = "r4",required = false) String r4,
+                                         @RequestParam(name = "r5",required = false) String r5,
+                                         @RequestParam(name = "r6",required = false) String r6,
+                                         @RequestParam(name = "r7",required = false) String r7,
+                                         @RequestParam(name = "r8",required = false) String r8,
+                                         @RequestParam(name = "r9",required = false) String r9,
+                                         @RequestParam(name = "r10",required = false) String r10,
+                                         @RequestParam(name = "r11",required = false) String r11,
+                                         @RequestParam(name = "sco",required = false) String sco) {
+        if (r==null || r1==null || r2==null || r3==null ||
+                r4==null || r5==null || r6==null ||r7==null || r8==null || r9==null || r10==null
+                || r11==null || sco==null) {
+            map.put("msg", "评测信息填写不完整，请重新填写挂号信息");
+            return "index";
+        } else {
+        List<String> numList = new ArrayList();
+        numList.add(r);
+        numList.add(r1);
+        numList.add(r2);
+        numList.add(r3);
+        numList.add(r4);
+        numList.add(r5);
+        numList.add(r6);
+        numList.add(r7);
+        numList.add(r8);
+        numList.add(r9);
+        numList.add(r10);
+        numList.add(r11);
+        numList.add(sco);
+        int score = 0;
+        for (int i = 0; i < numList.size(); i++) {
+            score = score + Integer.parseInt(numList.get(i));
+        }
+        System.out.println(score);
 
         Date date = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
-        orderNumber+=1;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+        orderNumber += 1;
         User user = new User();
         user.setOrderNumber(orderNumber);
         user.setName(username);
@@ -73,15 +111,17 @@ public class indexController {
         user.setPhoneNumber(userPhone);
         user.setDateTime(dateFormat.format(date));
         user.setFlag(false);
-        if (userMap.containsKey(userPhone)){
-            orderNumber-=1;
-            map.put("msg","您今天已经取过号了");
+        user.setScore(score);
+        if (userMap.containsKey(userPhone)) {
+            orderNumber -= 1;
+            map.put("msg", "您今天已经取过号了");
             return "index";
-        }else {
-            userMap.put(user.getPhoneNumber(),user);
-            model.addAttribute("userInfo",user);
+        } else {
+            userMap.put(user.getPhoneNumber(), user);
+            model.addAttribute("userInfo", user);
             return "userInfo";
         }
+    }
     }
 
     /**
