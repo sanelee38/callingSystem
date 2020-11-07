@@ -150,15 +150,14 @@ public class indexController {
                          @RequestParam(name = "userName",required = true) String userName){
 //        User user = userMap.get(userPhone);
         List<User> userlist = mapper.findByPhone(userPhone);
-        User user = userlist.get(0);
-        if (null == user){
+        if (userlist.size()==0){
             map.put("msg","您还没有挂号");
             return "index";
-        }else if(!user.getUsername().equals(userName)){
+        }else if(!userlist.get(0).getUsername().equals(userName)){
             map.put("msg","姓名与手机号不匹配");
             return "index";
         }else {
-            model.addAttribute("userInfo",user);
+            model.addAttribute("userInfo",userlist.get(0));
             return "userInfo";
         }
     }
