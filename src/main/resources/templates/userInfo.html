@@ -1,69 +1,35 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
 <head>
     <title>挂号信息</title>
-    <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8;width=device-width, initial-scale=1" />
+    <meta name="viewport" http-equiv="Content-Type"
+          content="text/html; charset=UTF-8;width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/zhiyuan.css">
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
-    <script src="/js/ie-emulation-modes-warning.js"></script>
 </head>
-<style>
-    th {text-align: center;color: white}
-    table {width: 800px;margin: 0 auto;font-size: 20px}
-    td {color: white}
-</style>
 <body style="background-color: #f5f4f8" background="images/bg.jpg">
-<div style="height: 100px;margin-top: 20px">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">
-        <div class="jumbotron"style="background: none">
-            <h1 style="text-align: center;color: ghostwhite">您的挂号信息</h1>
-        </div>
+<div class="panel panel-primary" style="margin-top: 50px;margin-left: 15px; margin-right: 15px;">
+    <div class="panel-heading">
+        <h3>挂号信息</h3>
+    </div>
+    <div class="panel-body">
+        <h5 style="font-size:16px">挂号时间：</h5>
+        <h4 th:text="${userInfo.getDateTime()}"></h4>
+        <h5 style="font-size:16px">姓名：</h5>
+        <h3 th:text="${userInfo.getUsername()}"></h3>
+        <h5 style="font-size:16px">号码：</h5>
+        <h1 th:text="${userInfo.getOrderNumber()}" style="color: red"></h1>
+        <h5 style="font-size:16px">性别</h5>
+        <h3 th:text="${userInfo.getGender()}"></h3>
+        <h5 style="font-size:16px">年龄</h5>
+        <h3 th:text="${userInfo.getUserAge()}"></h3>
+        <h5 style="font-size:16px">评测得分</h5>
+        <h3 th:text="${userInfo.getScore()}"></h3>
     </div>
 </div>
-
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-    <div style="height: 650px;width: 60%;margin-left: 20%;">
-        <div style="text-align: center;margin-top: 20px">
-            <table class="table table-bordered">
-                <tr>
-                    <th>姓名:</th>
-                    <td th:text="${userInfo.getName()}"></td>
-                </tr>
-                <tr>
-                    <th>年龄:</th>
-                    <td th:text="${userInfo.getAge()}"></td>
-                </tr>
-                <tr>
-                    <th>性别:</th>
-                    <td th:text="${userInfo.getGender()}"></td>
-                </tr>
-                <tr>
-                    <th>电话:</th>
-                    <td th:text="${userInfo.getPhoneNumber()}"></td>
-                </tr>
-                <tr>
-                    <th style="vertical-align: middle;color: orangered">号码:</th>
-                    <td th:text="${userInfo.getOrderNumber()}" style="color: orangered;font-size: 35px"></td>
-                </tr>
-                <tr>
-                    <th style="vertical-align: middle;color: orangered">评测得分:</th>
-                    <td th:text="${userInfo.getScore()}" style="color: orangered;font-size: 35px"></td>
-                </tr>
-            </table>
-        </div>
-        <div style="text-align: center">
-            <a href="/">
-                <input value="返回" class="btn btn-primary btn-block" style="width: 130px;display: inline;font-size: 20px">
-            </a>
-        </div>
-    </div>
-
-
-</div>
-
-<script src="/js/ie10-viewport-bug-workaround.js"></script>
 
 </body>
 </html>

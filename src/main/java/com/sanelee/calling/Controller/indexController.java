@@ -1,8 +1,9 @@
 package com.sanelee.calling.Controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sanelee.calling.Entity.User;
 import com.sanelee.calling.Service.NumberService;
-import com.sun.jmx.remote.internal.ArrayQueue;
+import com.sanelee.calling.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,18 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
 public class indexController {
+    @Autowired
+    private UserMapper mapper;
     /**
      * 定义一个LinkedHashMap实现排队取号数据结构
      */
-    LinkedHashMap<String, User> userMap = new LinkedHashMap<>();
-    List<User> userslist = new ArrayList<>();
+//    LinkedHashMap<String, User> userMap = new LinkedHashMap<>();
+//    List<User> userslist = new ArrayList<>();
     /**
      * 定义一个变量，每次取号就加1
      */
@@ -101,23 +102,25 @@ public class indexController {
         System.out.println(score);
 
         Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  hh:mm:ss");
         orderNumber += 1;
         User user = new User();
         user.setOrderNumber(orderNumber);
-        user.setName(username);
-        user.setAge(userAge);
+        user.setUsername(username);
+        user.setUserAge(userAge);
         user.setGender(userGender);
         user.setPhoneNumber(userPhone);
         user.setDateTime(dateFormat.format(date));
-        user.setFlag(false);
+        user.setFlag(0);
         user.setScore(score);
-        if (userMap.containsKey(userPhone)) {
+        List<User> userlist1 = mapper.findByPhone(userPhone);
+        if (userlist1.size()!=0 && userlist1.get(0).getFlag()==0) {
             orderNumber -= 1;
             map.put("msg", "您今天已经取过号了");
             return "index";
         } else {
-            userMap.put(user.getPhoneNumber(), user);
+            mapper.insert(user);
+//            userMap.put(user.getPhoneNumber(), user);
             model.addAttribute("userInfo", user);
             return "userInfo";
         }
@@ -145,11 +148,13 @@ public class indexController {
                          Map<String,Object> map,
                          @RequestParam(name = "userPhone",required = true) String userPhone,
                          @RequestParam(name = "userName",required = true) String userName){
-        User user = userMap.get(userPhone);
+//        User user = userMap.get(userPhone);
+        List<User> userlist = mapper.findByPhone(userPhone);
+        User user = userlist.get(0);
         if (null == user){
             map.put("msg","您还没有挂号");
             return "index";
-        }else if(!user.getName().equals(userName)){
+        }else if(!user.getUsername().equals(userName)){
             map.put("msg","姓名与手机号不匹配");
             return "index";
         }else {
@@ -166,22 +171,33 @@ public class indexController {
     public String nurseIndex(){
         return "nurseIndex";
     }
+
+    /**
+     *
+     * @param model
+     * @return
+     */
     @GetMapping("/nurse")
     public String nurse(Model model){
-        List<User> userList = new ArrayList();
-        for (Map.Entry<String,User> entry: userMap.entrySet()){
-            userList.add(entry.getValue());
-        }
+
+        List<User> userList = mapper.findByFlag(0);
+        List<User> userList1 = mapper.findByFlag(1);
+//        for (Map.Entry<String,User> entry: userMap.entrySet()){
+//            userList.add(entry.getValue());
+//        }
         model.addAttribute("userInfo",userList);
-        model.addAttribute("usersInfo",userslist);
+        model.addAttribute("usersInfo",userList1);
+//        model.addAttribute("usersInfo",userslist);
         return "nurse";
     }
 
     @GetMapping("/callNumber")
     public String callNumber(Model model,Map<String,Object> map){
-        if (userMap.size()!=0){
-        Map.Entry<String,User> next = userMap.entrySet().iterator().next();
-        User user = next.getValue();
+        List<User> userList = mapper.findByFlag(0);
+        if (userList.size()!=0){
+//        Map.Entry<String,User> next = userMap.entrySet().iterator().next();
+//        User user = next.getValue();
+        User user = userList.get(0);
         model.addAttribute("userInfo",user);
         return "callNumber";
         }else {
@@ -191,12 +207,25 @@ public class indexController {
     }
     @RequestMapping("/nextUser")
     public String nextUser(Map<String,Object> map){
-        Map.Entry<String, User> next = userMap.entrySet().iterator().next();
-        userslist.add(next.getValue());
-        userMap.remove(next.getKey());
-        if (userMap.size()!=0){
+        List<User> userList = mapper.findByFlag(0);
+        if (userList.size()!=0){
+            User currentuser = userList.get(0);
+            User user = mapper.selectById(currentuser.getId());
+            user.setFlag(1);
+            mapper.updateById(user);
             return "redirect:/callNumber";
-        }else {
+        }
+//        Map.Entry<String, User> next = userMap.entrySet().iterator().next();
+//        User currentuser = next.getValue();
+//        currentuser.setFlag(true);
+//        User user = mapper.selectById(currentuser.getId());
+//        user.setFlag(true);
+//        mapper.updateById(user);
+//        userslist.add(currentuser);
+//        userMap.remove(next.getKey());
+//        if (userMap.size()!=0){
+//            return "redirect:/callNumber";
+        else {
             map.put("msg","当前没有挂号病人");
             return "nurseIndex";
         }
@@ -204,7 +233,10 @@ public class indexController {
 
     @GetMapping("/reset")
     public String reset(Model model){
-        model.addAttribute("usersInfo",userslist);
+        List<User> userList = mapper.findByFlag(0);
+        List<User> userList1 = mapper.findByFlag(1);
+        model.addAttribute("userInfo",userList);
+        model.addAttribute("usersInfo",userList1);
         return "reset";
     }
     @RequestMapping("/resetNumber")
@@ -215,22 +247,22 @@ public class indexController {
 
     @GetMapping("/DevReset")
     public String DevReset(Model model){
-        List<User> userList = new ArrayList();
-        for (Map.Entry<String,User> entry: userMap.entrySet()){
-            userList.add(entry.getValue());
-        }
+        List<User> userList = mapper.findByFlag(0);
+        List<User> userList1 = mapper.findByFlag(1);
         model.addAttribute("userInfo",userList);
-        model.addAttribute("usersInfo",userslist);
+        model.addAttribute("usersInfo",userList1);
         return "DevReset";
     }
+
+    /**
+     * 重置所有用户信息
+     * @return
+     */
     @RequestMapping("/resetUser")
     public String resetUser(){
-
-        while (userMap.size() != 0){
-            Map.Entry<String, User> next = userMap.entrySet().iterator().next();
-            userMap.remove(next.getKey());
-        }
-        userslist.clear();
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.ne("flag",3);
+        mapper.delete(wrapper);
         orderNumber = 0;
         return "redirect:/DevReset";
     }

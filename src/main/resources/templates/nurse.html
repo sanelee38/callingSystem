@@ -25,14 +25,16 @@
                 <td><h4>姓名</h4></td>
                 <td><h4>年龄</h4></td>
                 <td><h4>性别</h4></td>
+                <td><h4>评测得分</h4></td>
             </tr>
             </thead>
-            <tbody th:each="users:${userInfo}">
+            <tbody th:each="user:${userInfo}">
             <tr>
-                <th style="font-size:14pt" th:text="${users.getOrderNumber()}" ></th>
-                <td style="font-size:14pt" th:text="${users.getName()}" ></td>
-                <td style="font-size:14pt" th:text="${users.getAge()}" ></td>
-                <td style="font-size:14pt" th:text="${users.getGender()}" ></td>
+                <th style="font-size:14pt" th:text="${user.getOrderNumber()}" ></th>
+                <td style="font-size:14pt" th:text="${user.getUsername()}" ></td>
+                <td style="font-size:14pt" th:text="${user.getUserAge()}" ></td>
+                <td style="font-size:14pt" th:text="${user.getGender()}" ></td>
+                <td style="font-size:14pt" th:text="${user.getScore()}" ></td>
             </tr>
             </tbody>
         </table>
@@ -50,14 +52,16 @@
                     <td><h4>姓名</h4></td>
                     <td><h4>年龄</h4></td>
                     <td><h4>性别</h4></td>
+                    <td><h4>评测得分</h4></td>
                 </tr>
                 </thead>
                 <tbody th:each="users:${usersInfo}">
                 <tr>
                     <th style="font-size:14pt" th:text="${users.getOrderNumber()}"></th>
-                    <td style="font-size:14pt" th:text="${users.getName()}"></td>
-                    <td style="font-size:14pt" th:text="${users.getAge()}"></td>
+                    <td style="font-size:14pt" th:text="${users.getUsername()}"></td>
+                    <td style="font-size:14pt" th:text="${users.getUserAge()}"></td>
                     <td style="font-size:14pt" th:text="${users.getGender()}"></td>
+                    <td style="font-size:14pt" th:text="${users.getScore()}"></td>
                 </tr>
                 </tbody>
             </table>

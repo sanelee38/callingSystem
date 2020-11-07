@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
 <head>
-    <title>填写取号信息</title>
+    <title>当前病人</title>
     <meta name="viewport" http-equiv="Content-Type"
           content="text/html; charset=UTF-8;width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -16,14 +16,18 @@
         <h3>当前病人</h3>
     </div>
     <div class="panel-body">
+        <p>时间：</p>
+        <h4 th:text="${userInfo.getDateTime()}"></h4>
         <p>姓名：</p>
-        <h3 th:text="${userInfo.getName()}"></h3>
+        <h3 th:text="${userInfo.getUsername()}"></h3>
         <p>号码：</p>
         <h3 th:text="${userInfo.getOrderNumber()}"></h3>
         <p>性别</p>
         <h3 th:text="${userInfo.getGender()}"></h3>
         <p>年龄</p>
-        <h3 th:text="${userInfo.getAge()}"></h3>
+        <h3 th:text="${userInfo.getUserAge()}"></h3>
+        <p>评测得分</p>
+        <h3 th:text="${userInfo.getScore()}"></h3>
     </div>
 </div>
 <div style="text-align: center">

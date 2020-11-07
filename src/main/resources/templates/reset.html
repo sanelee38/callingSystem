@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
 <head>
-    <title>当天所有病人信息</title>
+    <title>所有病人信息</title>
     <meta name="viewport" http-equiv="Content-Type"
           content="text/html; charset=UTF-8;width=device-width, initial-scale=1"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -14,6 +14,33 @@
 <div style="margin-top: 50px;margin-left: 15px; margin-right: 15px; text-align: center " >
     <div class="panel panel-primary">
         <div class="panel-heading">
+            <h3>未叫号病人名单</h3>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th><h4>号码</h4></th>
+                    <td><h4>姓名</h4></td>
+                    <td><h4>年龄</h4></td>
+                    <td><h4>性别</h4></td>
+                    <td><h4>电话</h4></td>
+                </tr>
+                </thead>
+                <tbody th:each="user:${userInfo}">
+                <tr>
+                    <th style="font-size:14pt" th:text="${user.getOrderNumber()}" ></th>
+                    <td style="font-size:14pt" th:text="${user.getUsername()}" ></td>
+                    <td style="font-size:14pt" th:text="${user.getUserAge()}" ></td>
+                    <td style="font-size:14pt" th:text="${user.getGender()}" ></td>
+                    <td style="font-size:14pt" th:text="${user.getPhoneNumber()}" ></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
             <h3>已叫号病人名单</h3>
         </div>
         <div class="table-responsive">
@@ -24,14 +51,16 @@
                     <td>姓名</td>
                     <td>年龄</td>
                     <td>性别</td>
+                    <td>电话</td>
                 </tr>
                 </thead>
                 <tbody th:each="users:${usersInfo}">
                 <tr>
                     <th style="font-size:14pt" th:text="${users.getOrderNumber()}"></th>
-                    <td style="font-size:14pt" th:text="${users.getName()}"></td>
-                    <td style="font-size:14pt" th:text="${users.getAge()}"></td>
+                    <td style="font-size:14pt" th:text="${users.getUsername()}"></td>
+                    <td style="font-size:14pt" th:text="${users.getUserAge()}"></td>
                     <td style="font-size:14pt" th:text="${users.getGender()}"></td>
+                    <td style="font-size:14pt" th:text="${users.getPhoneNumber()}"></td>
                 </tr>
                 </tbody>
             </table>
