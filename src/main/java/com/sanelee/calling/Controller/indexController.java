@@ -27,7 +27,7 @@ public class indexController {
     /**
      * 定义一个变量，每次取号就加1
      */
-    int orderNumber=0;
+    static volatile int orderNumber=0;
     @Autowired
     private NumberService numberService;
 
@@ -102,7 +102,7 @@ public class indexController {
         System.out.println(score);
 
         Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
         orderNumber += 1;
         User user = new User();
         user.setOrderNumber(orderNumber);
